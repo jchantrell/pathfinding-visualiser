@@ -2,5 +2,20 @@
 	outline: 1px solid black;
 	height: 25px;
 	width: 25px;
-	display: inline-block;
+}
+
+.node-start {
+	background: blue;
+}
+
+.node-end {
+	background: red;
+}
+
+.node-visited {
+	background: green;
+}
+
+.node-path {
+	background: yellow;
 }

@@ -2,7 +2,7 @@ import * as React from 'react';
 import './node.css';
 
 const Node = (props) => {
-	const extraClassName = props.isFinish
+	const variant = props.isFinish
 		? 'node-finish'
 		: props.isStart
 		? 'node-start'
@@ -10,12 +10,13 @@ const Node = (props) => {
 		? 'node-wall'
 		: '';
 	return (
-		<div className='node'>
-			<div
-				id={`node-${props.row}-${props.col}`}
-				className={`node ${extraClassName}`}
-			></div>
-		</div>
+		<div
+			id={`node-${props.row}-${props.col}`}
+			className={`node ${variant}`}
+			onMouseDown={() => props.mouseDown(props.row, props.col)}
+			onMouseEnter={() => props.mouseEnter(props.row, props.col)}
+			onMouseUp={() => props.mouseUp()}
+		></div>
 	);
 };
 
