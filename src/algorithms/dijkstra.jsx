@@ -5,7 +5,7 @@ export const dijkstra = (grid, start, finish) => {
 	while (!!unvisited.length) {
 		sortByDistance(unvisited);
 		const closest = unvisited.shift();
-		if (closest.walll) continue;
+		if (closest.wall) continue;
 		if (closest.distance === Infinity) return visited;
 		closest.visited = true;
 		visited.push(closest);
@@ -37,7 +37,6 @@ const getUnvisitedAdjacentNode = (node, grid) => {
 };
 
 const getAllNodes = (grid) => {
-	console.log(grid);
 	const nodes = [];
 	for (const row of grid) {
 		for (const node of row) {

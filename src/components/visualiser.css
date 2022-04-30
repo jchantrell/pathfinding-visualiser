@@ -3,5 +3,4 @@
 	display: grid;
 	justify-content: center;
 	grid-template-columns: repeat(50, 25px);
-	grid-template-rows: repeat(50, 25px);
 }

@@ -4,18 +4,22 @@
 	width: 25px;
 }
 
-.node-start {
-	background: blue;
-}
-
-.node-end {
-	background: red;
+.node-path {
+	background: #ffeb3b;
 }
 
 .node-visited {
-	background: green;
+	background: #00bcd4;
 }
 
-.node-path {
-	background: yellow;
+.node-wall {
+	background: black;
+}
+
+.node-start {
+	background: #4caf50;
+}
+
+.node-finish {
+	background: #f44336;
 }

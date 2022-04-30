@@ -2,11 +2,11 @@ import * as React from 'react';
 import './node.css';
 
 const Node = (props) => {
-	const variant = props.isFinish
+	const variant = props.finish
 		? 'node-finish'
-		: props.isStart
+		: props.start
 		? 'node-start'
-		: props.isWall
+		: props.wall
 		? 'node-wall'
 		: '';
 	return (
