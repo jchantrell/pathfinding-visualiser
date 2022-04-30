@@ -6,11 +6,7 @@
 }
 
 .node-path {
-	background: #ffeb3b;
-}
-
-.node-visited {
-	background: #00bcd4;
+	background: #fde047;
 }
 
 .node-wall {
@@ -23,4 +19,64 @@
 
 .node-finish {
 	background: #f44336;
+}
+
+.node-visited {
+	animation-name: visited;
+	animation-duration: 1.5s;
+	animation-timing-function: ease-out;
+	animation-delay: 0;
+	animation-direction: alternate;
+	animation-iteration-count: 1;
+	animation-fill-mode: forwards;
+	animation-play-state: running;
+}
+
+@keyframes visited {
+	0% {
+		transform: scale(0.6);
+		background-color: rgba(94, 234, 212, 0.8);
+	}
+
+	50% {
+		background-color: rgba(192, 132, 252, 0.9);
+	}
+
+	75% {
+		transform: scale(1.2);
+		background-color: rgba(147, 51, 234, 0.9);
+	}
+
+	100% {
+		transform: scale(1);
+		background-color: rgba(126, 34, 206, 0.9);
+	}
+}
+
+.node-path {
+	animation-name: path;
+	animation-duration: 1.5s;
+	animation-timing-function: ease-out;
+	animation-delay: 0;
+	animation-direction: alternate;
+	animation-iteration-count: 1;
+	animation-fill-mode: forwards;
+	animation-play-state: running;
+}
+
+@keyframes path {
+	0% {
+		transform: scale(0.8);
+		background-color: rgba(253, 224, 71, 1);
+	}
+
+	50% {
+		transform: scale(1.2);
+		background-color: rgba(253, 224, 71, 1);
+	}
+
+	100% {
+		transform: scale(1);
+		background-color: rgba(253, 224, 71, 1);
+	}
 }

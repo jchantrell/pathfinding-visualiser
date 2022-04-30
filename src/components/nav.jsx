@@ -11,7 +11,7 @@ import Menu from '@mui/material/Menu';
 import CookieIcon from '@mui/icons-material/Cookie';
 import { Brush } from '@mui/icons-material';
 
-const NavBar = () => {
+const NavBar = ({ visualise }) => {
 	const [anchorEl, setAnchorEl] = React.useState(null);
 	const [algorithm, setAlgorithm] = useState(`Dijkstra's`);
 	const open = Boolean(anchorEl);
@@ -19,10 +19,6 @@ const NavBar = () => {
 		setAnchorEl(event.currentTarget);
 	};
 	const handleClose = () => {
-		setAnchorEl(null);
-	};
-
-	const handleLogout = () => {
 		setAnchorEl(null);
 	};
 
@@ -58,15 +54,16 @@ const NavBar = () => {
 							'aria-labelledby': 'basic-button',
 						}}
 					>
-						<MenuItem onClick={handleClose}>Home</MenuItem>
+						<MenuItem onClick={handleClose}>Dijkstra's Algorithm</MenuItem>
 
-						<MenuItem onClick={handleClose}>Users</MenuItem>
+						<MenuItem onClick={handleClose}>A* Search Algorithm</MenuItem>
 					</Menu>
 
 					<Button
 						sx={{ margin: '0 40px 0 40px', color: 'black' }}
 						color='inherit'
 						variant='contained'
+						onClick={visualise}
 					>
 						Visualise {algorithm} algorithm
 					</Button>
