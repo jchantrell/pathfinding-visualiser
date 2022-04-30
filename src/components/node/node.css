@@ -1,5 +1,6 @@
 .node {
-	outline: 1px solid black;
+	outline: 1px solid #121212;
+	background-color: whitesmoke;
 	height: 25px;
 	width: 25px;
 }
@@ -13,7 +14,7 @@
 }
 
 .node-wall {
-	background: black;
+	background: #121212;
 }
 
 .node-start {

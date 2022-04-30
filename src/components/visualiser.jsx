@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import Node from './node/node';
-import './visualiser.css';
 
 import { dijkstra, getShortestPath } from '../algorithms/dijkstra';
 
@@ -18,6 +17,13 @@ const Visualiser = () => {
 		const grid = initialiseGrid();
 		setGrid(grid);
 	}, []);
+
+	const style = {
+		margin: '100px 0 0',
+		display: 'grid',
+		justifyContent: 'center',
+		gridTemplateColumns: 'repeat(50, 25px)',
+	};
 
 	const updateGrid = (row, col) => {
 		const updated = grid.slice();
@@ -106,7 +112,7 @@ const Visualiser = () => {
 
 	return (
 		<>
-			<div className='grid'>
+			<div style={style}>
 				{grid.map((row, rowIndex) => {
 					return (
 						<div key={rowIndex}>
