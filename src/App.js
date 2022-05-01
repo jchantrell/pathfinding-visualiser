@@ -15,7 +15,45 @@ const darkTheme = createTheme({
 });
 
 function App() {
+	const [algorithm, setAlgorithm] = useState(`Dijkstra's`);
 	const [grid, setGrid] = useState([]);
+	const [mousePressed, setMousePressed] = useState(false);
+	const [currentAction, setCurrentAction] = useState('edit');
+
+	const toggleEdit = () => {
+		setCurrentAction('edit');
+	};
+
+	const placeStart = () => {
+		setCurrentAction('placeStart');
+	};
+
+	const placeStop = () => {
+		setCurrentAction('placeStop');
+	};
+
+	const placeFinish = () => {
+		setCurrentAction('placeFinish');
+	};
+
+	const clearGrid = () => {
+		for (let i = 0; i < grid.length; i++) {
+			const row = grid[i];
+			console.log(row);
+			for (let j = 0; j < row.length; j++) {
+				const node = row[j];
+				const element = document.getElementById(`node-${node.row}-${node.col}`);
+
+				console.log(element);
+
+				if (element.id === `node-${startRow}-${startCol}`) {
+					element.className = 'node node-start';
+				} else if (element.id === `node-${finishRow}-${finishCol}`) {
+					element.className = 'node node-finish';
+				} else element.className = 'node';
+			}
+		}
+	};
 
 	const visualise = () => {
 		const start = grid[startRow][startCol];
@@ -65,8 +103,24 @@ function App() {
 		<>
 			<ThemeProvider theme={darkTheme}>
 				<CssBaseline />
-				<NavBar visualise={visualise} />
-				<Visualiser grid={grid} setGrid={setGrid} />
+				<NavBar
+					algorithm={algorithm}
+					setAlgorithm={setAlgorithm}
+					visualise={visualise}
+					toggleEdit={toggleEdit}
+					placeStart={placeStart}
+					placeFinish={placeFinish}
+					placeStop={placeStop}
+					clearGrid={clearGrid}
+				/>
+				<Visualiser
+					grid={grid}
+					setGrid={setGrid}
+					currentAction={currentAction}
+					setCurrentAction={setCurrentAction}
+					mousePressed={mousePressed}
+					setMousePressed={setMousePressed}
+				/>
 			</ThemeProvider>
 		</>
 	);

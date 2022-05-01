@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -8,19 +7,25 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import CookieIcon from '@mui/icons-material/Cookie';
 import EditIcon from '@mui/icons-material/Edit';
-import EditOffIcon from '@mui/icons-material/EditOff';
 import ClearIcon from '@mui/icons-material/Clear';
 
-import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
-import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
-import DirectionsIcon from '@mui/icons-material/Directions';
+import FlagIcon from '@mui/icons-material/Flag';
+import HikingIcon from '@mui/icons-material/Hiking';
 import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 
-const NavBar = ({ visualise }) => {
+const NavBar = ({
+	algorithm,
+	setAlgorithm,
+	visualise,
+	toggleEdit,
+	placeStart,
+	placeFinish,
+	placeStop,
+	clearGrid,
+}) => {
 	const [anchorEl, setAnchorEl] = React.useState(null);
-	const [algorithm, setAlgorithm] = useState(`Dijkstra's`);
+
 	const open = Boolean(anchorEl);
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
@@ -75,19 +80,53 @@ const NavBar = ({ visualise }) => {
 						Visualise {algorithm} algorithm
 					</Button>
 
-					<IconButton size='large' edge='start' color='inherit' sx={{ mr: 2 }}>
+					<IconButton
+						onClick={toggleEdit}
+						size='large'
+						edge='start'
+						color='inherit'
+						sx={{ mr: 2 }}
+					>
 						<EditIcon />
 					</IconButton>
 
-					<IconButton size='large' edge='start' color='inherit' sx={{ mr: 2 }}>
-						<EditOffIcon />
+					<IconButton
+						onClick={placeStart}
+						size='large'
+						edge='start'
+						color='inherit'
+						sx={{ mr: 2 }}
+					>
+						<HikingIcon />
 					</IconButton>
 
-					<IconButton size='large' edge='start' color='inherit' sx={{ mr: 2 }}>
+					<IconButton
+						onClick={placeStop}
+						size='large'
+						edge='start'
+						color='inherit'
+						sx={{ mr: 2 }}
+					>
 						<EmojiPeopleIcon />
 					</IconButton>
 
-					<IconButton size='large' edge='start' color='inherit' sx={{ mr: 2 }}>
+					<IconButton
+						onClick={placeFinish}
+						size='large'
+						edge='start'
+						color='inherit'
+						sx={{ mr: 2 }}
+					>
+						<FlagIcon />
+					</IconButton>
+
+					<IconButton
+						onClick={clearGrid}
+						size='large'
+						edge='start'
+						color='inherit'
+						sx={{ mr: 2 }}
+					>
 						<ClearIcon />
 					</IconButton>
 				</Toolbar>

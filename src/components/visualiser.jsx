@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Node from './node/node';
 import {
 	startRow,
@@ -10,9 +10,7 @@ import {
 	cols,
 } from '../contexts/global';
 
-const Visualiser = ({ grid, setGrid }) => {
-	const [mousePressed, setMousePressed] = useState(false);
-
+const Visualiser = ({ grid, setGrid, mousePressed, setMousePressed }) => {
 	useEffect(() => {
 		const grid = initialiseGrid();
 		setGrid(grid);
