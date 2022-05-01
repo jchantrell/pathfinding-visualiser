@@ -6,6 +6,8 @@ const Node = (props) => {
 		? 'node-finish'
 		: props.start
 		? 'node-start'
+		: props.stop
+		? 'node-stop'
 		: props.wall
 		? 'node-wall'
 		: '';

@@ -1,5 +1,6 @@
-export const dijkstra = (grid, start, finish) => {
+export const dijkstra = (grid, start, finish, stops) => {
 	let visited = [];
+	let stopsFound = [];
 	start.distance = 0;
 	const unvisited = getAllNodes(grid);
 	while (!!unvisited.length) {
@@ -7,6 +8,9 @@ export const dijkstra = (grid, start, finish) => {
 		const closest = unvisited.shift();
 		if (closest.wall) continue;
 		if (closest.distance === Infinity) return visited;
+		if (closest.stop) {
+			stopsFound.push(closest);
+		}
 		closest.visited = true;
 		visited.push(closest);
 		if (closest === finish) return visited;
@@ -46,7 +50,7 @@ const getAllNodes = (grid) => {
 	return nodes;
 };
 
-export const getShortestPath = (finish) => {
+export const getShortestPath = (finish, stops) => {
 	const shortestPath = [];
 	let current = finish;
 	while (current !== null) {

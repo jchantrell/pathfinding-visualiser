@@ -7,14 +7,8 @@ import { useState } from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 import { dijkstra, getShortestPath } from './algorithms/dijkstra';
-import {
-	startRow,
-	startCol,
-	finishRow,
-	finishCol,
-	cols,
-	rows,
-} from './contexts/global';
+import { cols, rows } from './contexts/global';
+import { StackedBarChartSharp } from '@mui/icons-material';
 
 const darkTheme = createTheme({
 	palette: {
@@ -27,6 +21,11 @@ function App() {
 	const [grid, setGrid] = useState([]);
 	const [mousePressed, setMousePressed] = useState(false);
 	const [currentAction, setCurrentAction] = useState('edit');
+	const [stops, setStops] = useState([]);
+	const [startRow, setStartRow] = useState(4);
+	const [startCol, setStartCol] = useState(10);
+	const [finishRow, setFinishRow] = useState(25);
+	const [finishCol, setFinishCol] = useState(10);
 
 	useEffect(() => {
 		const grid = initialiseGrid();
@@ -52,12 +51,75 @@ function App() {
 	const updateGrid = (row, col) => {
 		const updated = grid.slice();
 		const node = updated[row][col];
-		const updatedNode = {
-			...node,
-			wall: !node.wall,
-		};
-		updated[row][col] = updatedNode;
-		return updated;
+
+		// add/remove walls
+		if (currentAction === 'edit') {
+			const updatedNode = {
+				...node,
+				wall: !node.wall,
+			};
+			updated[row][col] = updatedNode;
+			return updated;
+		}
+
+		// change start location
+		if (currentAction === 'placeStart') {
+			const previousStart = document.getElementById(
+				`node-${startRow}-${startCol}`
+			);
+
+			if (node === updated[startRow][startCol]) {
+				return updated;
+			} else {
+				updated[startRow][startCol].start = false;
+
+				setStartRow(row);
+				setStartCol(col);
+				previousStart.className = 'node';
+
+				const updatedNode = {
+					...node,
+					start: true,
+				};
+
+				updated[row][col] = updatedNode;
+				return updated;
+			}
+		}
+
+		// change finish location
+		if (currentAction === 'placeFinish') {
+			const previousFinish = document.getElementById(
+				`node-${finishRow}-${finishCol}`
+			);
+
+			updated[finishRow][finishCol].finish = false;
+			setFinishRow(row);
+			setFinishCol(col);
+			previousFinish.className = 'node';
+
+			const updatedNode = {
+				...node,
+				finish: !node.finish,
+			};
+
+			updated[row][col] = updatedNode;
+			return updated;
+		}
+
+		// place stop
+		if (currentAction === 'placeStop') {
+			const updatedNode = {
+				...node,
+				stop: !node.stop,
+			};
+
+			updated[row][col] = updatedNode;
+			const updatedStops = [...stops];
+			updatedStops.push(updatedNode);
+			setStops(updatedStops);
+			return updated;
+		}
 	};
 
 	const mouseEnter = (row, col) => {
@@ -123,8 +185,8 @@ function App() {
 	const visualise = () => {
 		const start = grid[startRow][startCol];
 		const finish = grid[finishRow][finishCol];
-		const visited = dijkstra(grid, start, finish);
-		const spt = getShortestPath(finish);
+		const visited = dijkstra(grid, start, finish, stops);
+		const spt = getShortestPath(finish, stops);
 		animate(visited, spt);
 	};
 
