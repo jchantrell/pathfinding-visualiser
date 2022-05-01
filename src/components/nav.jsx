@@ -9,7 +9,14 @@ import MenuIcon from '@mui/icons-material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import CookieIcon from '@mui/icons-material/Cookie';
-import { Brush } from '@mui/icons-material';
+import EditIcon from '@mui/icons-material/Edit';
+import EditOffIcon from '@mui/icons-material/EditOff';
+import ClearIcon from '@mui/icons-material/Clear';
+
+import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
+import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
+import DirectionsIcon from '@mui/icons-material/Directions';
+import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 
 const NavBar = ({ visualise }) => {
 	const [anchorEl, setAnchorEl] = React.useState(null);
@@ -69,11 +76,19 @@ const NavBar = ({ visualise }) => {
 					</Button>
 
 					<IconButton size='large' edge='start' color='inherit' sx={{ mr: 2 }}>
-						<Brush />
+						<EditIcon />
 					</IconButton>
 
 					<IconButton size='large' edge='start' color='inherit' sx={{ mr: 2 }}>
-						<CookieIcon />
+						<EditOffIcon />
+					</IconButton>
+
+					<IconButton size='large' edge='start' color='inherit' sx={{ mr: 2 }}>
+						<EmojiPeopleIcon />
+					</IconButton>
+
+					<IconButton size='large' edge='start' color='inherit' sx={{ mr: 2 }}>
+						<ClearIcon />
 					</IconButton>
 				</Toolbar>
 			</AppBar>

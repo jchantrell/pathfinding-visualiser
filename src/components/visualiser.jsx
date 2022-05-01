@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import Node from './node/node';
-
-import { dijkstra, getShortestPath } from '../algorithms/dijkstra';
-
-const START_COL = 15;
-const START_ROW = 5;
-const FINISH_COL = 15;
-const FINISH_ROW = 45;
+import {
+	startRow,
+	startCol,
+	finishRow,
+	finishCol,
+	rows,
+	cols,
+} from '../contexts/global';
 
 const Visualiser = ({ grid, setGrid }) => {
 	const [mousePressed, setMousePressed] = useState(false);
@@ -21,7 +22,7 @@ const Visualiser = ({ grid, setGrid }) => {
 		margin: '100px 0 0',
 		display: 'grid',
 		justifyContent: 'center',
-		gridTemplateColumns: 'repeat(50, 25px)',
+		gridTemplateColumns: `repeat(${rows}, 40px)`,
 	};
 
 	const updateGrid = (row, col) => {
@@ -55,8 +56,8 @@ const Visualiser = ({ grid, setGrid }) => {
 		return {
 			col,
 			row,
-			start: row === START_ROW && col === START_COL,
-			finish: row === FINISH_ROW && col === FINISH_COL,
+			start: row === startRow && col === startCol,
+			finish: row === finishRow && col === finishCol,
 			visited: false,
 			wall: false,
 			distance: 500000,
@@ -66,16 +67,15 @@ const Visualiser = ({ grid, setGrid }) => {
 
 	const initialiseGrid = () => {
 		const grid = [];
-		for (let row = 0; row < 50; row++) {
+		for (let row = 0; row < rows; row++) {
 			const currentRow = [];
-			for (let col = 0; col < 30; col++) {
+			for (let col = 0; col < cols; col++) {
 				currentRow.push(createNode(col, row));
 			}
 			grid.push(currentRow);
 		}
 		return grid;
 	};
-
 
 	return (
 		<>
