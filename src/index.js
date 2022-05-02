@@ -1,3 +1,4 @@
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
@@ -7,6 +8,7 @@ const style = {
 	margin: 0,
 	padding: 0,
 	border: 0,
+	
 };
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

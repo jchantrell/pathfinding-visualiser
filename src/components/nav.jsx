@@ -34,11 +34,18 @@ const NavBar = ({
 		setAnchorEl(null);
 	};
 
+	let visualiseButtonText = `Visualise ${algorithm} algorithm`;
+
+	if (window.innerWidth < 800){
+		visualiseButtonText = 'Go'
+	}
+
 	return (
 		<Box
 			sx={{
 				flexGrow: 1,
 				alignItems: 'center',
+				justifyContent: 'center'
 			}}
 		>
 			<AppBar position='static'>
@@ -72,12 +79,12 @@ const NavBar = ({
 					</Menu>
 
 					<Button
-						sx={{ margin: '0 40px 0 40px', color: 'black' }}
+						sx={{  color: 'black' }}
 						color='inherit'
 						variant='contained'
 						onClick={visualise}
 					>
-						Visualise {algorithm} algorithm
+						{visualiseButtonText}
 					</Button>
 
 					<IconButton
@@ -85,7 +92,7 @@ const NavBar = ({
 						size='large'
 						edge='start'
 						color='inherit'
-						sx={{ mr: 2 }}
+						sx={{ mr: 2, ml: 1, }}
 					>
 						<EditIcon />
 					</IconButton>

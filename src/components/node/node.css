@@ -1,8 +1,6 @@
 .node {
 	outline: 1px solid #121212;
 	background-color: #d1d5db;
-	height: 40px;
-	width: 40px;
 }
 
 .node-path {
@@ -15,19 +13,19 @@
 
 .node-start {
 	background-image: url('/src/icons/traveller.svg');
-	background-size: 45px;
+	background-size: 32px;
 	background-position: center;
 }
 
 .node-finish {
 	background-image: url('/src/icons/destination.svg');
-	background-size: 45px;
+	background-size: 32px;
 	background-position: center;
 }
 
 .node-stop {
 	background-image: url('/src/icons/waving.svg');
-	background-size: 60px;
+	background-size: 40px;
 	background-position: center;
 }
 

@@ -7,8 +7,6 @@ import { useState } from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 import { dijkstra, getShortestPath } from './algorithms/dijkstra';
-import { cols, rows } from './contexts/global';
-import { StackedBarChartSharp } from '@mui/icons-material';
 
 const darkTheme = createTheme({
 	palette: {
@@ -16,16 +14,36 @@ const darkTheme = createTheme({
 	},
 });
 
-function App() {
+function App() {	
+	let cols = 20
+	let rows = 30
+	if (window.innerWidth < 700){
+		rows = 19
+		cols = 30	
+	}
+	else if (window.innerWidth < 750){
+		rows = 18
+		cols = 30
+	}
+	else if (window.innerWidth < 800){
+		rows = 25
+		cols = 30
+	}
+	else if (window.innerWidth < 850){
+		rows = 24
+		cols = 30
+	}
+
 	const [algorithm, setAlgorithm] = useState(`Dijkstra's`);
 	const [grid, setGrid] = useState([]);
 	const [mousePressed, setMousePressed] = useState(false);
 	const [currentAction, setCurrentAction] = useState('edit');
 	const [stops, setStops] = useState([]);
 	const [startRow, setStartRow] = useState(4);
-	const [startCol, setStartCol] = useState(10);
-	const [finishRow, setFinishRow] = useState(25);
-	const [finishCol, setFinishCol] = useState(10);
+	const [startCol, setStartCol] = useState(cols / 2);
+	const [finishRow, setFinishRow] = useState(rows - 5);
+	const [finishCol, setFinishCol] = useState(cols / 2);
+
 
 	useEffect(() => {
 		const grid = initialiseGrid();
@@ -93,18 +111,23 @@ function App() {
 				`node-${finishRow}-${finishCol}`
 			);
 
-			updated[finishRow][finishCol].finish = false;
-			setFinishRow(row);
-			setFinishCol(col);
-			previousFinish.className = 'node';
+			if (node === updated[finishRow][finishCol]) {
+				return updated;
+			} else {
+				updated[finishRow][finishCol].finish = false;
 
-			const updatedNode = {
-				...node,
-				finish: !node.finish,
-			};
+				setFinishRow(row);
+				setFinishCol(col);
+				previousFinish.className = 'node';
 
-			updated[row][col] = updatedNode;
-			return updated;
+				const updatedNode = {
+					...node,
+					finish: true,
+				};
+
+				updated[row][col] = updatedNode;
+				return updated;
+			}
 		}
 
 		// place stop
@@ -121,6 +144,18 @@ function App() {
 			return updated;
 		}
 	};
+
+	const touchStart = (row, col) => {
+		console.log(row, col)
+	}
+
+	const touchMove = (event) => {
+		
+	}
+
+	const touchEnd = (row, col) => {
+		console.log(row, col)
+	}
 
 	const mouseEnter = (row, col) => {
 		if (!mousePressed) return;
@@ -202,11 +237,13 @@ function App() {
 				const node = visited[i];
 				const nd = document.getElementById(`node-${node.row}-${node.col}`);
 				if (
-					nd.id === `node-${startRow}-${startCol}` ||
-					nd.id === `node-${finishRow}-${finishCol}`
-				) {
-					nd.style.backgroundColor = 'rgba(192, 132, 252, 0.9)';
-				} else nd.className = 'node node-visited';
+					nd.id === `node-${startRow}-${startCol}`) {
+					nd.className = 'node node-start node-visited';
+				} 
+				else if (nd.id === `node-${finishRow}-${finishCol}`) {
+					nd.className = 'node node-finish node-visited';
+				}
+				else nd.className = 'node node-visited';
 			}, 10 * i);
 		}
 	};
@@ -217,11 +254,13 @@ function App() {
 				const node = spt[i];
 				const nd = document.getElementById(`node-${node.row}-${node.col}`);
 				if (
-					nd.id === `node-${startRow}-${startCol}` ||
-					nd.id === `node-${finishRow}-${finishCol}`
-				) {
-					nd.style.backgroundColor = 'rgba(253, 224, 71, 1)';
-				} else nd.className = 'node node-path';
+					nd.id === `node-${startRow}-${startCol}`) {
+					nd.className = 'node node-start node-path';
+				} 
+				else if (nd.id === `node-${finishRow}-${finishCol}`) {
+					nd.className = 'node node-finish node-path';
+				}
+				else nd.className = 'node node-path';
 			}, 50 * i);
 		}
 	};
@@ -241,6 +280,8 @@ function App() {
 					clearGrid={clearGrid}
 				/>
 				<Visualiser
+					rows={rows}
+					cols={cols}
 					mouseDown={mouseDown}
 					mouseEnter={mouseEnter}
 					mouseUp={mouseUp}
@@ -250,6 +291,9 @@ function App() {
 					setCurrentAction={setCurrentAction}
 					mousePressed={mousePressed}
 					setMousePressed={setMousePressed}
+					touchStart={touchStart}
+					touchMove={touchMove}
+					touchEnd={touchEnd}
 				/>
 			</ThemeProvider>
 		</>

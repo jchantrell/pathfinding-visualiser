@@ -1,29 +1,35 @@
 import * as React from 'react';
 import Node from './node/node';
-import { rows, cols } from '../contexts/global';
 
-const Visualiser = ({ grid, mousePressed, mouseDown, mouseEnter, mouseUp }) => {
-	const style = {
-		margin: '100px 0 0',
+const Visualiser = ({ grid, mousePressed, mouseDown, mouseEnter, mouseUp, touchStart, touchEnd, touchMove, rows, cols }) => {
+
+	
+	const desktopStyle = {	
+		height: '100%',
+		margin: '20px 0px 20px 0',
 		display: 'grid',
 		justifyContent: 'center',
-		gridTemplateColumns: `repeat(${rows}, 40px)`,
-		userSelect: 'none',
+		alignContent: 'center',
+		gridTemplateColumns: `repeat(${rows}, ${rows}px)`,
+		userSelect: 'none',	
+		touchAction: 'none'
 	};
 
 	return (
 		<>
-			<div style={style}>
+			<div style={desktopStyle}>
 				{grid.map((row, rowIndex) => {
 					return (
 						<div key={rowIndex}>
 							{row.map((node, index) => {
-								const { row, col, finish, start, wall, stop } = node;
+								const { row,  col,  finish, start, wall, stop } = node;
 								return (
 									<Node
 										key={index}
 										col={col}
+										cols={cols}
 										row={row}
+										rows={rows}
 										finish={finish}
 										start={start}
 										wall={wall}
@@ -32,6 +38,9 @@ const Visualiser = ({ grid, mousePressed, mouseDown, mouseEnter, mouseUp }) => {
 										mouseDown={(row, col) => mouseDown(row, col)}
 										mouseEnter={(row, col) => mouseEnter(row, col)}
 										mouseUp={mouseUp}
+										touchStart={touchStart}
+										touchMove={touchMove}
+										touchEnd={touchEnd}
 									></Node>
 								);
 							})}
