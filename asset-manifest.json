@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/pathfinding-visualiser/static/css/main.b45aa4e8.css",
-    "main.js": "/pathfinding-visualiser/static/js/main.5a88bfe3.js",
+    "main.css": "/pathfinding-visualiser/static/css/main.9765bd48.css",
+    "main.js": "/pathfinding-visualiser/static/js/main.c6dc11dd.js",
     "index.html": "/pathfinding-visualiser/index.html",
     "static/media/traveller.svg": "/pathfinding-visualiser/static/media/traveller.372c69ac95d643cb86d1.svg",
     "static/media/waving.svg": "/pathfinding-visualiser/static/media/waving.37d38b6ff87d2ce9eead.svg",
     "static/media/destination.svg": "/pathfinding-visualiser/static/media/destination.c5dc686f5e6e2d5ba6bc.svg",
-    "main.b45aa4e8.css.map": "/pathfinding-visualiser/static/css/main.b45aa4e8.css.map",
-    "main.5a88bfe3.js.map": "/pathfinding-visualiser/static/js/main.5a88bfe3.js.map"
+    "main.9765bd48.css.map": "/pathfinding-visualiser/static/css/main.9765bd48.css.map",
+    "main.c6dc11dd.js.map": "/pathfinding-visualiser/static/js/main.c6dc11dd.js.map"
   },
   "entrypoints": [
-    "static/css/main.b45aa4e8.css",
-    "static/js/main.5a88bfe3.js"
+    "static/css/main.9765bd48.css",
+    "static/js/main.c6dc11dd.js"
   ]
 }
