@@ -1,4 +1,10 @@
 export const dijkstra = (grid, start, finish, stops) => {
+  console.log(start, stops)
+  // recursively get dist to all stops if stops.length >= 1
+  // get shortest dist stop
+  // from that stop, check dist to all remaining stops and pick shortest
+  // repeat until no stops left then travel to final stop
+  // keep steps in ordered list
   let visited = []
   let stopsFound = []
   let finalStop = null
@@ -64,8 +70,6 @@ const getAllNodes = (grid) => {
 }
 
 export const getShortestPath = (finish, stops) => {
-  //find closest stop, then find closest stop that
-
   console.log(stops, finish)
 
   const shortestPath = []
