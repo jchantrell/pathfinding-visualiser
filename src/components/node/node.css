@@ -1,84 +1,84 @@
 .node {
-	outline: 1px solid #121212;
-	background-color: #d1d5db;
+  outline: 1px solid #121212;
+  background-color: #d1d5db;
 }
 
 .node-path {
-	background: #fde047;
+  background: #fde047;
 }
 
 .node-wall {
-	background: #121212;
+  background: #121212;
 }
 
 .node-start {
-	background-image: url('/src/icons/traveller.svg');
-	background-size: 32px;
-	background-position: center;
+  background-image: url('/src/icons/traveller.svg');
+  background-size: 32px;
+  background-position: center;
 }
 
 .node-finish {
-	background-image: url('/src/icons/destination.svg');
-	background-size: 32px;
-	background-position: center;
+  background-image: url('/src/icons/destination.svg');
+  background-size: 32px;
+  background-position: center;
 }
 
 .node-stop {
-	background-image: url('/src/icons/waving.svg');
-	background-size: 40px;
-	background-position: center;
+  background-image: url('/src/icons/waving.svg');
+  background-size: 40px;
+  background-position: center;
 }
 
 .node-visited {
-	animation-name: visited;
-	animation-duration: 1.5s;
-	animation-timing-function: ease-out;
-	animation-delay: 0;
-	animation-direction: alternate;
-	animation-iteration-count: 1;
-	animation-fill-mode: forwards;
-	animation-play-state: running;
+  animation-name: visited;
+  animation-duration: 1.5s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
 }
 
 @keyframes visited {
-	0% {
-		background-color: rgba(94, 234, 212, 0.8);
-	}
+  0% {
+    background-color: rgba(94, 234, 212, 0.8);
+  }
 
-	50% {
-		background-color: rgba(192, 132, 252, 0.9);
-	}
+  50% {
+    background-color: rgba(192, 132, 252, 0.9);
+  }
 
-	75% {
-		background-color: rgba(147, 51, 234, 0.9);
-	}
+  75% {
+    background-color: rgba(147, 51, 234, 0.9);
+  }
 
-	100% {
-		background-color: rgba(126, 34, 206, 0.9);
-	}
+  100% {
+    background-color: rgba(126, 34, 206, 0.9);
+  }
 }
 
 .node-path {
-	animation-name: path;
-	animation-duration: 1.5s;
-	animation-timing-function: ease-out;
-	animation-delay: 0;
-	animation-direction: alternate;
-	animation-iteration-count: 1;
-	animation-fill-mode: forwards;
-	animation-play-state: running;
+  animation-name: path;
+  animation-duration: 1.5s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
 }
 
 @keyframes path {
-	0% {
-		background-color: rgba(253, 224, 71, 1);
-	}
+  0% {
+    background-color: rgba(253, 224, 71, 1);
+  }
 
-	50% {
-		background-color: rgba(253, 224, 71, 1);
-	}
+  50% {
+    background-color: rgba(253, 224, 71, 1);
+  }
 
-	100% {
-		background-color: rgba(253, 224, 71, 1);
-	}
+  100% {
+    background-color: rgba(253, 224, 71, 1);
+  }
 }
