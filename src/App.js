@@ -7,6 +7,7 @@ import { useState } from 'react'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 
 import { dijkstra, getShortestPath } from './algorithms/dijkstra'
+import { Route } from '@mui/icons-material'
 
 const darkTheme = createTheme({
   palette: {
@@ -130,29 +131,27 @@ function App() {
     if (currentAction === 'placeStop') {
       const updatedStops = [...stops]
 
-
-      if (updated[row][col].stop === true){
-        const noStops = updatedStops.filter(stop => stop !== updated[row][col])
+      if (updated[row][col].stop === true) {
+        const noStops = updatedStops.filter(
+          (stop) => stop !== updated[row][col]
+        )
         const updatedNode = {
           ...node,
-          stop: false, 
+          stop: false,
         }
-        updated[row][col] = updatedNode    
+        updated[row][col] = updatedNode
 
         setStops(noStops)
-      }
-
-      else {
+      } else {
         const updatedNode = {
           ...node,
-          stop: true, 
+          stop: true,
         }
 
-        updated[row][col] = updatedNode    
+        updated[row][col] = updatedNode
         updatedStops.push(updatedNode)
         setStops(updatedStops)
-
-      }   
+      }
       return updated
     }
   }
@@ -230,9 +229,10 @@ function App() {
   const visualise = () => {
     const start = grid[startRow][startCol]
     const finish = grid[finishRow][finishCol]
-    const visited = dijkstra(grid, start, stops)
-    const spt = getShortestPath(finish, stops, grid)
-    animate(visited, spt)
+    let route = []
+    let visualise = dijkstra(grid, start, stops)
+    let shortestPath = getShortestPath(grid, stops, finish)
+    animate(visualise, shortestPath)
   }
 
   const animate = (visited, spt) => {

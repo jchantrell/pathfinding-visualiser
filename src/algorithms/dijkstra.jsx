@@ -63,65 +63,55 @@ const getAllNodes = (grid) => {
   return nodes
 }
 
-export const getShortestPath = (finish, stops, grid) => {
-  let route = []
-  const paths = []
-  for (let i = 0; i < stops.length; i++){
-    const shortestPath = []
+export const getShortestPath = (grid, stops, finish) => {
+  let currentPaths = []
+  let masterRoute = []
+
+  // handle stops
+  for (let i = 0; i < stops.length; i++) {
+    const path = []
     let current = stops[i]
     while (current !== null) {
-      shortestPath.unshift(current)
+      path.unshift(current)
       current = current.previousNode
     }
-    paths.push(shortestPath)
-  } 
-  if (paths.length >= 1){
-    const byLength = paths.sort((a, b) => a.length - b.length)
-    route = [...byLength[0], ...route]
-    const updatedStops = stops.filter(stop => stop !== route[route.length-1])
-    byLength.shift()
-    const remaining = dijkstra(grid, route[route.length-1], updatedStops)
-    const more = getShortestPath(finish, updatedStops, grid)
-    console.log(remaining, more)
-  } else {
-    const shortestPath = []
+    currentPaths.push(path)
+  }
+
+  // case for no stops and returning finish
+  if (stops.length < 1) {
+    const path = []
     let current = finish
     while (current !== null) {
-      shortestPath.unshift(current)
+      path.unshift(current)
       current = current.previousNode
     }
-    route = [...shortestPath, ...route]
+    masterRoute = [...path, ...masterRoute]
+    console.log(masterRoute)
+    return masterRoute
   }
-  console.log(route)
-  return route
 
-}
+  // else we filter stops and get a new grid to work out next route
 
-const getRemainingPaths = (grid, start, stops) => {
-  let visited = []
-  let stopsFound = []
-  let finalStop = null
-  start.distance = 0
-  const unvisited = getAllNodes(grid)
-  while (!!unvisited.length) {
-    sortByDistance(unvisited)
-    const closest = unvisited.shift()
-    if (closest.wall) {
-      return
-    }
-    if (closest.distance === Infinity) return visited
-    if (closest.stop) {
-      stopsFound.push(closest)
-    }
+  currentPaths.sort((a, b) => a.length - b.length)
+  masterRoute = [...currentPaths[0], ...masterRoute]
 
-    closest.visited = true
-    visited.push(closest)
-    if (closest.finish) {
-      finalStop = closest
-    }
-    if (finalStop !== null && stopsFound.length === stops.length) {
-      return visited
-    }
-    updateAdjacentNodes(closest, grid)
-  }
+  let lastNode = masterRoute[masterRoute.length - 1]
+
+  grid.forEach((group) =>
+    group.forEach((cell) => {
+      if (cell === lastNode) {
+        cell.stop = false
+      }
+    })
+  )
+
+  const updatedStart = lastNode
+  const updatedStops = stops.filter((stop) => stop !== lastNode)
+
+  let remainder = dijkstra(grid, updatedStart, updatedStops)
+
+  getShortestPath(grid, updatedStops, finish)
+
+  return masterRoute
 }
