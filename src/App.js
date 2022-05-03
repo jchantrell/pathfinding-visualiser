@@ -128,15 +128,31 @@ function App() {
 
     // place stop
     if (currentAction === 'placeStop') {
-      const updatedNode = {
-        ...node,
-        stop: !node.stop,
+      const updatedStops = [...stops]
+
+
+      if (updated[row][col].stop === true){
+        const noStops = updatedStops.filter(stop => stop !== updated[row][col])
+        const updatedNode = {
+          ...node,
+          stop: false, 
+        }
+        updated[row][col] = updatedNode    
+
+        setStops(noStops)
       }
 
-      updated[row][col] = updatedNode
-      const updatedStops = [...stops]
-      updatedStops.push(updatedNode)
-      setStops(updatedStops)
+      else {
+        const updatedNode = {
+          ...node,
+          stop: true, 
+        }
+
+        updated[row][col] = updatedNode    
+        updatedStops.push(updatedNode)
+        setStops(updatedStops)
+
+      }   
       return updated
     }
   }
