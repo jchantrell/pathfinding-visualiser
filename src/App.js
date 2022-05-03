@@ -230,8 +230,8 @@ function App() {
   const visualise = () => {
     const start = grid[startRow][startCol]
     const finish = grid[finishRow][finishCol]
-    const visited = dijkstra(grid, start, finish, stops)
-    const spt = getShortestPath(finish, stops)
+    const visited = dijkstra(grid, start, stops)
+    const spt = getShortestPath(finish, stops, grid)
     animate(visited, spt)
   }
 

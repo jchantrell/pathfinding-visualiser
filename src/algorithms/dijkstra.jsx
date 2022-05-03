@@ -1,10 +1,4 @@
-export const dijkstra = (grid, start, finish, stops) => {
-  console.log(start, stops)
-  // recursively get dist to all stops if stops.length >= 1
-  // get shortest dist stop
-  // from that stop, check dist to all remaining stops and pick shortest
-  // repeat until no stops left then travel to final stop
-  // keep steps in ordered list
+export const dijkstra = (grid, start, stops) => {
   let visited = []
   let stopsFound = []
   let finalStop = null
@@ -69,14 +63,65 @@ const getAllNodes = (grid) => {
   return nodes
 }
 
-export const getShortestPath = (finish, stops) => {
-  console.log(stops, finish)
-
-  const shortestPath = []
-  let current = finish
-  while (current !== null) {
-    shortestPath.unshift(current)
-    current = current.previousNode
+export const getShortestPath = (finish, stops, grid) => {
+  let route = []
+  const paths = []
+  for (let i = 0; i < stops.length; i++){
+    const shortestPath = []
+    let current = stops[i]
+    while (current !== null) {
+      shortestPath.unshift(current)
+      current = current.previousNode
+    }
+    paths.push(shortestPath)
+  } 
+  if (paths.length >= 1){
+    const byLength = paths.sort((a, b) => a.length - b.length)
+    route = [...byLength[0], ...route]
+    const updatedStops = stops.filter(stop => stop !== route[route.length-1])
+    byLength.shift()
+    const remaining = dijkstra(grid, route[route.length-1], updatedStops)
+    const more = getShortestPath(finish, updatedStops, grid)
+    console.log(remaining, more)
+  } else {
+    const shortestPath = []
+    let current = finish
+    while (current !== null) {
+      shortestPath.unshift(current)
+      current = current.previousNode
+    }
+    route = [...shortestPath, ...route]
   }
-  return shortestPath
+  console.log(route)
+  return route
+
+}
+
+const getRemainingPaths = (grid, start, stops) => {
+  let visited = []
+  let stopsFound = []
+  let finalStop = null
+  start.distance = 0
+  const unvisited = getAllNodes(grid)
+  while (!!unvisited.length) {
+    sortByDistance(unvisited)
+    const closest = unvisited.shift()
+    if (closest.wall) {
+      return
+    }
+    if (closest.distance === Infinity) return visited
+    if (closest.stop) {
+      stopsFound.push(closest)
+    }
+
+    closest.visited = true
+    visited.push(closest)
+    if (closest.finish) {
+      finalStop = closest
+    }
+    if (finalStop !== null && stopsFound.length === stops.length) {
+      return visited
+    }
+    updateAdjacentNodes(closest, grid)
+  }
 }
