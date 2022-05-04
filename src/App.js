@@ -7,6 +7,7 @@ import { useState } from 'react'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 
 import { dijkstra, getShortestPath } from './algorithms/dijkstra'
+import Notification from './components/notification'
 
 const darkTheme = createTheme({
   palette: {
@@ -32,6 +33,8 @@ function App() {
   }
 
   const [algorithm, setAlgorithm] = useState(`Dijkstra's`)
+  const [notification, setNotification] = useState('')
+  const [open, setOpen] = React.useState(false)
   const [grid, setGrid] = useState([])
   const [mousePressed, setMousePressed] = useState(false)
   const [currentAction, setCurrentAction] = useState('edit')
@@ -233,15 +236,16 @@ function App() {
     animate(visualise, shortestPath)
   }
 
-  const animate = (visited, spt) => {
+  const animate = (visited, shortestPath) => {
     if (visited === undefined) {
       console.log('locked in')
-      // animate something to display error here
+      setNotification('No path available. Clear some walls and try again.')
+      setOpen(true)
     } else {
       for (let i = 0; i <= visited.length; i++) {
         if (i === visited.length) {
           setTimeout(() => {
-            animateSpt(spt)
+            animatePath(shortestPath)
           }, 10 * i)
           return
         }
@@ -259,10 +263,10 @@ function App() {
     }
   }
 
-  const animateSpt = (spt) => {
-    for (let i = 0; i < spt.length; i++) {
+  const animatePath = (shortestPath) => {
+    for (let i = 0; i < shortestPath.length; i++) {
       setTimeout(() => {
-        const node = spt[i]
+        const node = shortestPath[i]
         const nd = document.getElementById(`node-${node.row}-${node.col}`)
         if (nd.id === `node-${startRow}-${startCol}`) {
           nd.className = 'node node-start node-path'
@@ -277,6 +281,11 @@ function App() {
     <>
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
+        <Notification
+          open={open}
+          setOpen={setOpen}
+          notification={notification}
+        />
         <NavBar
           algorithm={algorithm}
           setAlgorithm={setAlgorithm}
