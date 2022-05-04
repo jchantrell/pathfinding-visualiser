@@ -7,7 +7,6 @@ import { useState } from 'react'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 
 import { dijkstra, getShortestPath } from './algorithms/dijkstra'
-import { Route } from '@mui/icons-material'
 
 const darkTheme = createTheme({
   palette: {
@@ -229,7 +228,6 @@ function App() {
   const visualise = () => {
     const start = grid[startRow][startCol]
     const finish = grid[finishRow][finishCol]
-    let route = []
     let visualise = dijkstra(grid, start, stops)
     let shortestPath = getShortestPath(grid, stops, finish)
     animate(visualise, shortestPath)

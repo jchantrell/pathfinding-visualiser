@@ -9,6 +9,7 @@ import MenuItem from '@mui/material/MenuItem'
 import Menu from '@mui/material/Menu'
 import EditIcon from '@mui/icons-material/Edit'
 import ClearIcon from '@mui/icons-material/Clear'
+import Tooltip from '@mui/material/Tooltip';
 
 import FlagIcon from '@mui/icons-material/Flag'
 import HikingIcon from '@mui/icons-material/Hiking'
@@ -50,19 +51,21 @@ const NavBar = ({
     >
       <AppBar position="static">
         <Toolbar sx={{ width: '100%' }}>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2, justifySelf: 'flex-start' }}
-            aria-controls={open ? 'basic-menu' : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? 'true' : undefined}
-            onClick={handleClick}
-          >
-            <MenuIcon />
-          </IconButton>
+          <Tooltip title="Select Algorithm">
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2, justifySelf: 'flex-start' }}
+              aria-controls={open ? 'basic-menu' : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? 'true' : undefined}
+              onClick={handleClick}
+            >
+              <MenuIcon />
+            </IconButton>
+          </Tooltip>
 
           <Menu
             id="basic-menu"
@@ -78,64 +81,77 @@ const NavBar = ({
             <MenuItem onClick={handleClose}>A* Search Algorithm</MenuItem>
           </Menu>
 
-          <Button
-            sx={{ color: 'black' }}
-            color="inherit"
-            variant="contained"
-            onClick={visualise}
-          >
-            {visualiseButtonText}
-          </Button>
+          <Tooltip title="Visualise Algorithm">
+            <Button
+              sx={{ color: 'black' }}
+              color="inherit"
+              variant="contained"
+              onClick={visualise}
+            >
+              {visualiseButtonText}
+            </Button>
+          </Tooltip>
 
-          <IconButton
-            onClick={toggleEdit}
-            size="large"
-            edge="start"
-            color="inherit"
-            sx={{ mr: 2, ml: 1 }}
-          >
-            <EditIcon />
-          </IconButton>
+          <Tooltip title="Place and Remove Walls">
+            <IconButton
+              onClick={toggleEdit}
+              size="large"
+              edge="start"
+              color="inherit"
+              sx={{ mr: 2, ml: 1 }}
+            >
+              <EditIcon />
+            </IconButton>
+          </Tooltip>
 
-          <IconButton
-            onClick={placeStart}
-            size="large"
-            edge="start"
-            color="inherit"
-            sx={{ mr: 2 }}
-          >
-            <HikingIcon />
-          </IconButton>
+          <Tooltip title="Place Start Point">
+            <IconButton
+              onClick={placeStart}
+              size="large"
+              edge="start"
+              color="inherit"
+              sx={{ mr: 2 }}
+            >
+              <HikingIcon />
+            </IconButton>
+          </Tooltip>
 
-          <IconButton
-            onClick={placeStop}
-            size="large"
-            edge="start"
-            color="inherit"
-            sx={{ mr: 2 }}
-          >
-            <EmojiPeopleIcon />
-          </IconButton>
+          <Tooltip title="Place Stop">
+            <IconButton
+              onClick={placeStop}
+              size="large"
+              edge="start"
+              color="inherit"
+              sx={{ mr: 2 }}
+            >
+              <EmojiPeopleIcon />
+            </IconButton>
+          </Tooltip>
 
-          <IconButton
-            onClick={placeFinish}
-            size="large"
-            edge="start"
-            color="inherit"
-            sx={{ mr: 2 }}
-          >
-            <FlagIcon />
-          </IconButton>
+          <Tooltip title="Place Finish Point">
+            <IconButton
+              onClick={placeFinish}
+              size="large"
+              edge="start"
+              color="inherit"
+              sx={{ mr: 2 }}
+            >
+              <FlagIcon />
+            </IconButton>
+          </Tooltip>
 
-          <IconButton
-            onClick={clearGrid}
-            size="large"
-            edge="start"
-            color="inherit"
-            sx={{ mr: 2 }}
-          >
-            <ClearIcon />
-          </IconButton>
+          <Tooltip title="Clear Grid">
+            <IconButton
+              onClick={clearGrid}
+              size="large"
+              edge="start"
+              color="inherit"
+              sx={{ mr: 2 }}
+            >
+              <ClearIcon />
+            </IconButton>
+          </Tooltip>
+
         </Toolbar>
       </AppBar>
     </Box>
