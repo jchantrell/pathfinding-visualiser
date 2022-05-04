@@ -9,7 +9,7 @@ import MenuItem from '@mui/material/MenuItem'
 import Menu from '@mui/material/Menu'
 import EditIcon from '@mui/icons-material/Edit'
 import ClearIcon from '@mui/icons-material/Clear'
-import Tooltip from '@mui/material/Tooltip';
+import Tooltip from '@mui/material/Tooltip'
 
 import FlagIcon from '@mui/icons-material/Flag'
 import HikingIcon from '@mui/icons-material/Hiking'
@@ -35,7 +35,7 @@ const NavBar = ({
     setAnchorEl(null)
   }
 
-  let visualiseButtonText = `Visualise ${algorithm} algorithm`
+  let visualiseButtonText = `Visualise ${algorithm}`
 
   if (window.innerWidth < 800) {
     visualiseButtonText = 'Go'
@@ -76,9 +76,23 @@ const NavBar = ({
               'aria-labelledby': 'basic-button',
             }}
           >
-            <MenuItem onClick={handleClose}>Dijkstra's Algorithm</MenuItem>
+            <MenuItem
+              onClick={() => {
+                setAlgorithm("dijkstra's")
+                handleClose()
+              }}
+            >
+              Dijkstra's Algorithm
+            </MenuItem>
 
-            <MenuItem onClick={handleClose}>A* Search Algorithm</MenuItem>
+            <MenuItem
+              onClick={() => {
+                setAlgorithm('a*')
+                handleClose()
+              }}
+            >
+              A* Search Algorithm
+            </MenuItem>
           </Menu>
 
           <Tooltip title="Visualise Algorithm">
@@ -151,7 +165,6 @@ const NavBar = ({
               <ClearIcon />
             </IconButton>
           </Tooltip>
-
         </Toolbar>
       </AppBar>
     </Box>

@@ -228,7 +228,13 @@ function App() {
     }
   }
 
-  const visualise = () => {
+  const handleVisualise = () => {
+    if (algorithm === "Dijkstra's") {
+      visualiseDijkstra()
+    }
+  }
+
+  const visualiseDijkstra = () => {
     const start = grid[startRow][startCol]
     const finish = grid[finishRow][finishCol]
     let visualise = dijkstra(grid, start, stops)
@@ -289,7 +295,7 @@ function App() {
         <NavBar
           algorithm={algorithm}
           setAlgorithm={setAlgorithm}
-          visualise={visualise}
+          visualise={handleVisualise}
           toggleEdit={toggleEdit}
           placeStart={placeStart}
           placeFinish={placeFinish}
