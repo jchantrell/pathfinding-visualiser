@@ -44,6 +44,7 @@ function App() {
   const [finishRow, setFinishRow] = useState(rows - 5)
   const [finishCol, setFinishCol] = useState(cols / 2)
   const [animationActive, setAnimationActive] = useState(false)
+  const [gridAlreadyAnimated, setGridAlreadyAnimated] = useState(false)
 
   useEffect(() => {
     const grid = initialiseGrid()
@@ -170,12 +171,13 @@ function App() {
   }
 
   const mouseEnter = (row, col) => {
-    if (!mousePressed) return
+    if (!mousePressed || animationActive) return
     const updatedGrid = updateGrid(row, col)
     setGrid(updatedGrid)
   }
 
   const mouseDown = (row, col) => {
+    if (animationActive) return
     const updatedGrid = updateGrid(row, col)
     setGrid(updatedGrid)
     setMousePressed(true)
@@ -186,6 +188,7 @@ function App() {
   }
 
   const clearGrid = () => {
+    if (animationActive) return
     let grid = initialiseGrid()
     setGrid(grid)
     for (let i = 0; i < grid.length; i++) {
@@ -229,9 +232,30 @@ function App() {
     }
   }
 
+  const clearVisuals = () => {
+    for (let i = 0; i < grid.length; i++) {
+      let row = grid[i]
+      for (let j = 0; j < row.length; j++) {
+        const node = row[j]
+        const nd = document.getElementById(`node-${node.row}-${node.col}`)
+        if (nd.classList.contains('node-wall')) {
+          nd.className = 'node node-wall'
+        } else if (nd.id === `node-${startRow}-${startCol}`) {
+          nd.className = 'node node-start'
+        } else if (nd.id === `node-${finishRow}-${finishCol}`) {
+          nd.className = 'node node-finish'
+        } else nd.className = 'node'
+      }
+    }
+    setGridAlreadyAnimated(false)
+  }
+
   const handleVisualise = () => {
     if (animationActive) {
       return
+    }
+    if (gridAlreadyAnimated) {
+      clearVisuals()
     }
     if (algorithm === '') {
       setNotification('Select an algorithm via the menu.')
@@ -256,10 +280,10 @@ function App() {
       setOpen(true)
     } else {
       animate(visited, shortestPath)
+      setGridAlreadyAnimated(true)
       setAnimationActive(true)
       setTimeout(() => {
         setAnimationActive(false)
-        console.log('done')
       }, visited.length * 10 + shortestPath.length * 50)
     }
   }
