@@ -32,7 +32,7 @@ function App() {
     cols = 30
   }
 
-  const [algorithm, setAlgorithm] = useState(`Dijkstra's`)
+  const [algorithm, setAlgorithm] = useState('')
   const [notification, setNotification] = useState('')
   const [open, setOpen] = React.useState(false)
   const [grid, setGrid] = useState([])
@@ -43,6 +43,7 @@ function App() {
   const [startCol, setStartCol] = useState(cols / 2)
   const [finishRow, setFinishRow] = useState(rows - 5)
   const [finishCol, setFinishCol] = useState(cols / 2)
+  const [animationActive, setAnimationActive] = useState(false)
 
   useEffect(() => {
     const grid = initialiseGrid()
@@ -229,22 +230,42 @@ function App() {
   }
 
   const handleVisualise = () => {
+    if (animationActive) {
+      return
+    }
+    if (algorithm === '') {
+      setNotification('Select an algorithm via the menu.')
+      setOpen(true)
+    }
     if (algorithm === "Dijkstra's") {
       visualiseDijkstra()
+    }
+    if (algorithm === 'A*') {
+      setNotification('Algorithm is not implemented yet. Come back later!')
+      setOpen(true)
     }
   }
 
   const visualiseDijkstra = () => {
     const start = grid[startRow][startCol]
     const finish = grid[finishRow][finishCol]
-    let visualise = dijkstra(grid, start, stops)
+    let visited = dijkstra(grid, start, stops)
     let shortestPath = getShortestPath(grid, stops, finish)
-    animate(visualise, shortestPath)
+    if (visited === undefined) {
+      setNotification('No path available. Clear some walls and try again.')
+      setOpen(true)
+    } else {
+      animate(visited, shortestPath)
+      setAnimationActive(true)
+      setTimeout(() => {
+        setAnimationActive(false)
+        console.log('done')
+      }, visited.length * 10 + shortestPath.length * 50)
+    }
   }
 
   const animate = (visited, shortestPath) => {
     if (visited === undefined) {
-      console.log('locked in')
       setNotification('No path available. Clear some walls and try again.')
       setOpen(true)
     } else {
@@ -284,7 +305,7 @@ function App() {
   }
 
   return (
-    <>
+    <div>
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
         <Notification
@@ -293,6 +314,7 @@ function App() {
           notification={notification}
         />
         <NavBar
+          animationActive={animationActive}
           algorithm={algorithm}
           setAlgorithm={setAlgorithm}
           visualise={handleVisualise}
@@ -319,7 +341,7 @@ function App() {
           touchEnd={touchEnd}
         />
       </ThemeProvider>
-    </>
+    </div>
   )
 }
 

@@ -78,7 +78,7 @@ const NavBar = ({
           >
             <MenuItem
               onClick={() => {
-                setAlgorithm("dijkstra's")
+                setAlgorithm("Dijkstra's")
                 handleClose()
               }}
             >
@@ -87,7 +87,7 @@ const NavBar = ({
 
             <MenuItem
               onClick={() => {
-                setAlgorithm('a*')
+                setAlgorithm('A*')
                 handleClose()
               }}
             >
