@@ -16,14 +16,11 @@ import HikingIcon from '@mui/icons-material/Hiking'
 import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople'
 
 const NavBar = ({
+  startVisualisation,
+  attemptClearGrid,
   algorithm,
   setAlgorithm,
-  visualise,
-  toggleEdit,
-  placeStart,
-  placeFinish,
-  placeStop,
-  clearGrid,
+  setCurrentAction,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState(null)
 
@@ -31,8 +28,21 @@ const NavBar = ({
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
   }
+
   const handleClose = () => {
     setAnchorEl(null)
+  }
+
+  const handleVisualise = () => {
+    startVisualisation()
+  }
+
+  const handleMode = (mode) => {
+    setCurrentAction(mode)
+  }
+
+  const handleClear = () => {
+    attemptClearGrid()
   }
 
   let visualiseButtonText = `Visualise ${algorithm}`
@@ -100,7 +110,9 @@ const NavBar = ({
               sx={{ color: 'black' }}
               color="inherit"
               variant="contained"
-              onClick={visualise}
+              onClick={() => {
+                handleVisualise()
+              }}
             >
               {visualiseButtonText}
             </Button>
@@ -108,7 +120,9 @@ const NavBar = ({
 
           <Tooltip title="Place and Remove Walls">
             <IconButton
-              onClick={toggleEdit}
+              onClick={() => {
+                handleMode('edit')
+              }}
               size="large"
               edge="start"
               color="inherit"
@@ -120,7 +134,9 @@ const NavBar = ({
 
           <Tooltip title="Place Start Point">
             <IconButton
-              onClick={placeStart}
+              onClick={() => {
+                handleMode('start')
+              }}
               size="large"
               edge="start"
               color="inherit"
@@ -132,7 +148,9 @@ const NavBar = ({
 
           <Tooltip title="Place Stop">
             <IconButton
-              onClick={placeStop}
+              onClick={() => {
+                handleMode('stop')
+              }}
               size="large"
               edge="start"
               color="inherit"
@@ -144,7 +162,9 @@ const NavBar = ({
 
           <Tooltip title="Place Finish Point">
             <IconButton
-              onClick={placeFinish}
+              onClick={() => {
+                handleMode('finish')
+              }}
               size="large"
               edge="start"
               color="inherit"
@@ -156,7 +176,9 @@ const NavBar = ({
 
           <Tooltip title="Clear Grid">
             <IconButton
-              onClick={clearGrid}
+              onClick={() => {
+                handleClear()
+              }}
               size="large"
               edge="start"
               color="inherit"
