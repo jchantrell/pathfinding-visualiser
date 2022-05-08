@@ -271,10 +271,13 @@ const Visualiser = (props) => {
           const node = visited[i]
 
           const nd = document.getElementById(`node-${node.row}-${node.col}`)
+
           if (nd.id === `node-${startRow}-${startCol}`) {
             nd.className = 'node node-start node-visited'
           } else if (nd.id === `node-${finishRow}-${finishCol}`) {
             nd.className = 'node node-finish node-visited'
+          } else if (nd.classList.contains('node-stop')) {
+            nd.className = 'node node-stop node-visited'
           } else nd.className = 'node node-visited'
         }, 10 * i)
       }
@@ -290,6 +293,8 @@ const Visualiser = (props) => {
           nd.className = 'node node-start node-path'
         } else if (nd.id === `node-${finishRow}-${finishCol}`) {
           nd.className = 'node node-finish node-path'
+        } else if (nd.classList.contains('node-stop')) {
+          nd.className = 'node node-stop node-path'
         } else nd.className = 'node node-path'
       }, 50 * i)
     }
