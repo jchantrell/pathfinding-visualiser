@@ -54,9 +54,9 @@ const NavBar = ({
   return (
     <Box
       sx={{
-        flexGrow: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        position: 'sticky',
       }}
     >
       <AppBar position="static">

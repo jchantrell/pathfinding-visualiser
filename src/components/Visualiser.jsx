@@ -2,42 +2,45 @@ import * as React from 'react'
 import { useEffect, useState } from 'react'
 import Node from './node/Node'
 import { dijkstra, getShortestPath } from '../algorithms/dijkstra'
+import { useCallback } from 'react'
 
 const Visualiser = (props) => {
-  const [cols, setCols] = useState(20)
-  const [rows, setRows] = useState(30)
+  let colsAmount,
+    rowsAmount = 0
   const [grid, setGrid] = useState([])
-  const [startRow, setStartRow] = useState(4)
-  const [startCol, setStartCol] = useState(cols / 2)
-  const [finishRow, setFinishRow] = useState(rows - 5)
-  const [finishCol, setFinishCol] = useState(cols / 2)
+  const [startRow, setStartRow] = useState(null)
+  const [startCol, setStartCol] = useState(null)
+  const [finishRow, setFinishRow] = useState(null)
+  const [finishCol, setFinishCol] = useState(null)
   const [stops, setStops] = useState([])
   const [animationActive, setAnimationActive] = useState(false)
   const [gridAlreadyAnimated, setGridAlreadyAnimated] = useState(false)
   const [mousePressed, setMousePressed] = useState(false)
 
-  useEffect(() => {
+  if (document.getElementById('wrapper') !== null) {
+    colsAmount = Math.floor(
+      document.getElementById('wrapper').clientHeight / 50
+    )
+    rowsAmount = Math.floor(document.getElementById('wrapper').clientWidth / 50)
+  }
+
+  window.onresize = () => {
+    setStartCol(Math.floor(colsAmount / 2))
+    setStartRow(Math.floor(2))
+    setFinishCol(Math.floor(colsAmount / 2))
+    setFinishRow(Math.floor(rowsAmount - 3))
+    
     const grid = initialiseGrid()
     setGrid(grid)
-  }, [])
-
-  useEffect(() => {
-    if (props.clearGrid) {
-      clearGrid()
-      props.setClearGrid(false)
-    }
-    if (props.visualise) {
-      handleVisualise()
-    }
-  })
+  }
 
   const style = {
+    margin: '10px',
     height: '100%',
-    margin: '20px 0px 20px 0',
     display: 'grid',
-    justifyContent: 'center',
-    alignContent: 'center',
-    gridTemplateColumns: `repeat(${rows}, ${rows}px)`,
+    gridTemplateColumns: `repeat(${rowsAmount}, 1fr)`,
+    gridTemplateRows: `repeat(${rowsAmount}, 1fr)`,
+
     userSelect: 'none',
     touchAction: 'none',
   }
@@ -78,6 +81,7 @@ const Visualiser = (props) => {
       const previousStart = document.getElementById(
         `node-${startRow}-${startCol}`
       )
+      console.log(previousStart)
 
       if (node === updated[startRow][startCol]) {
         return updated
@@ -172,30 +176,34 @@ const Visualiser = (props) => {
     }
   }
 
-  const initialiseGrid = () => {
+  const createNode = useCallback(
+    (col, row) => {
+      return {
+        col,
+        row,
+        start: row === startRow && col === startCol,
+        finish: row === finishRow && col === finishCol,
+        visited: false,
+        wall: false,
+        distance: 500000,
+        previousNode: null,
+      }
+    },
+    [startCol, startRow, finishCol, finishRow]
+  )
+
+  const initialiseGrid = useCallback(() => {
     const grid = []
-    for (let row = 0; row < rows; row++) {
+    for (let row = 0; row < rowsAmount; row++) {
       const currentRow = []
-      for (let col = 0; col < cols; col++) {
+      for (let col = 0; col < colsAmount; col++) {
         currentRow.push(createNode(col, row))
       }
       grid.push(currentRow)
     }
-    return grid
-  }
 
-  const createNode = (col, row) => {
-    return {
-      col,
-      row,
-      start: row === startRow && col === startCol,
-      finish: row === finishRow && col === finishCol,
-      visited: false,
-      wall: false,
-      distance: 500000,
-      previousNode: null,
-    }
-  }
+    return grid
+  }, [colsAmount, rowsAmount, createNode])
 
   const clearVisuals = () => {
     for (let i = 0; i < grid.length; i++) {
@@ -300,9 +308,29 @@ const Visualiser = (props) => {
     }
   }
 
+  useEffect(() => {
+    setStartCol(Math.floor(colsAmount / 2))
+    setStartRow(Math.floor(2))
+    setFinishCol(Math.floor(colsAmount / 2))
+    setFinishRow(Math.floor(rowsAmount - 3))
+
+    const grid = initialiseGrid()
+    setGrid(grid)
+  }, [colsAmount, rowsAmount, startCol, startRow, finishCol, finishRow])
+
+  useEffect(() => {
+    if (props.clearGrid) {
+      clearGrid()
+      props.setClearGrid(false)
+    }
+    if (props.visualise) {
+      handleVisualise()
+    }
+  })
+
   return (
     <>
-      <div style={style}>
+      <div style={style} id="wrapper">
         {grid.map((row, rowIndex) => {
           return (
             <div key={rowIndex}>
@@ -312,9 +340,9 @@ const Visualiser = (props) => {
                   <Node
                     key={index}
                     col={col}
-                    cols={cols}
+                    cols={colsAmount}
                     row={row}
-                    rows={rows}
+                    rows={rowsAmount}
                     finish={finish}
                     start={start}
                     wall={wall}

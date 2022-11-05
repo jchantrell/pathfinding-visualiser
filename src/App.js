@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { useEffect } from 'react'
 import Visualiser from './components/Visualiser'
 import NavBar from './components/Nav'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -42,7 +41,7 @@ function App() {
   }
 
   return (
-    <div>
+    <>
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
         <Notification
@@ -67,7 +66,7 @@ function App() {
           setClearGrid={setClearGrid}
         />
       </ThemeProvider>
-    </div>
+    </>
   )
 }
 

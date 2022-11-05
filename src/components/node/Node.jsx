@@ -13,7 +13,6 @@ const Node = (props) => {
     : ''
   return (
     <div
-      style={{ height: `${props.rows}px`, width: `${props.rows}px` }}
       id={`node-${props.row}-${props.col}`}
       className={`node ${variant}`}
       onMouseDown={() => props.mouseDown(props.row, props.col)}
