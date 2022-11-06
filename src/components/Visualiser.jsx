@@ -29,7 +29,7 @@ const Visualiser = (props) => {
     setStartRow(Math.floor(2))
     setFinishCol(Math.floor(colsAmount / 2))
     setFinishRow(Math.floor(rowsAmount - 3))
-    
+
     const grid = initialiseGrid()
     setGrid(grid)
   }
@@ -313,10 +313,12 @@ const Visualiser = (props) => {
     setStartRow(Math.floor(2))
     setFinishCol(Math.floor(colsAmount / 2))
     setFinishRow(Math.floor(rowsAmount - 3))
+  }, [colsAmount, rowsAmount])
 
+  useEffect(() => {
     const grid = initialiseGrid()
     setGrid(grid)
-  }, [colsAmount, rowsAmount, startCol, startRow, finishCol, finishRow])
+  }, [initialiseGrid])
 
   useEffect(() => {
     if (props.clearGrid) {
