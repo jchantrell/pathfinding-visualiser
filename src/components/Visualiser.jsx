@@ -238,7 +238,7 @@ const Visualiser = (props) => {
     }
     if (props.algorithm === 'A*') {
       props.showNotification(
-        'Algorithm is not implemented yet. Come back later!'
+        'Algorithm is not implemented yet. Come back later.'
       )
     }
   }
